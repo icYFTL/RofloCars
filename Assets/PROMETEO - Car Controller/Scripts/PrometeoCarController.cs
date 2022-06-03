@@ -26,8 +26,7 @@ public class PrometeoCarController : MonoBehaviour
       public int maxSpeed = 90; //The maximum speed that the car can reach in km/h.
       [Range(10, 120)]
       public int maxReverseSpeed = 45; //The maximum speed that the car can reach while going on reverse in km/h.
-      [Range(1, 10)]
-      public int accelerationMultiplier = 2; // How fast the car can accelerate. 1 is a slow acceleration and 10 is the fastest.
+      public int accelerationMultiplier => Storage.AccelerationMultiplier; // How fast the car can accelerate. 1 is a slow acceleration and 10 is the fastest.
       [Space(10)]
       [Range(10, 45)]
       public int maxSteeringAngle = 27; // The maximum angle that the tires can reach while rotating the steering wheel.
@@ -211,7 +210,7 @@ public class PrometeoCarController : MonoBehaviour
           InvokeRepeating("CarSpeedUI", 0f, 0.1f);
         }else if(!useUI){
           if(carSpeedText != null){
-            carSpeedText.text = "0";
+            carSpeedText.text = "Speed: 0 KM";
           }
         }
 
@@ -377,7 +376,7 @@ public class PrometeoCarController : MonoBehaviour
       if(useUI){
           try{
             float absoluteCarSpeed = Mathf.Abs(carSpeed);
-            carSpeedText.text = Mathf.RoundToInt(absoluteCarSpeed).ToString();
+                carSpeedText.text = $"Speed: {Mathf.RoundToInt(absoluteCarSpeed)} KM";
           }catch(Exception ex){
             Debug.LogWarning(ex);
           }

@@ -1,42 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GenerateCoins : MonoBehaviour
 {
-    public GameObject enemy;
-    public GameObject friend;
-    public GameObject terrainObject;
-
-    public int numberOfEnemies;
-    public int numberOfFriends;
-    public int numberOfTerrainObjects;
-
-    public GameObject terrain;
-
+    public Rigidbody CarRBody;
+    public GameObject CoinPrefab;
+    public int MaxCoins = 5;
     void Start()
     {
-        
+        StartCoroutine(waiter());
     }
 
-    void Update()
+    private Tuple<float, float> GetRandomPosition()
     {
-        OnSpawnAPrefab();
+        var x = Random.Range(CarRBody.transform.position.x - 2, CarRBody.transform.position.x - 7);
+        var z = Random.Range(CarRBody.transform.position.z + 2, CarRBody.transform.position.z + 7);
+        // var z = CarRBody.transform.position.z;
+
+        return new Tuple<float, float>(x, z);
     }
 
-    [SerializeField] private GameObject prefab;
-
-    [SerializeField] private Vector2 spawnPosition;
-
-    [SerializeField] private bool random;
-
-    public void OnSpawnAPrefab()
+    IEnumerator waiter()
     {
-        float x = Random.Range(-8, 8);
-        float y = Random.Range(-4, 4);
+        while (true)
+        {
+            if (Storage.CurrentMoneyCount < MaxCoins)
+            {
+                var pos = GetRandomPosition();
+                Instantiate(CoinPrefab, new Vector3(pos.Item1, CarRBody.transform.position.y - 2, pos.Item2), CarRBody.transform.rotation);
+                Storage.CurrentMoneyCount++;
+                
+            }
 
-        Instantiate(prefab, new Vector2(x, y), Quaternion.identity);
-
+            yield return new WaitForSeconds(4);
+        }
 
     }
+
 }
