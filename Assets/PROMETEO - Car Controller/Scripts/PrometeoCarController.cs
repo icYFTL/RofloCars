@@ -511,6 +511,12 @@ public class PrometeoCarController : MonoBehaviour
       if(throttleAxis > 1f){
         throttleAxis = 1f;
       }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {   // ???????
+            localVelocityX = 0f;
+        }
+
+
       //If the car is going backwards, then apply brakes in order to avoid strange
       //behaviours. If the local velocity in the 'z' axis is less than -1f, then it
       //is safe to apply positive torque to go forward.
@@ -531,10 +537,10 @@ public class PrometeoCarController : MonoBehaviour
           // If the maxSpeed has been reached, then stop applying torque to the wheels.
           // IMPORTANT: The maxSpeed variable should be considered as an approximation; the speed of the car
           // could be a bit higher than expected.
-    			frontLeftCollider.motorTorque = 0;
-    			frontRightCollider.motorTorque = 0;
-          rearLeftCollider.motorTorque = 0;
-    			rearRightCollider.motorTorque = 0;
+    		frontLeftCollider.motorTorque = 0;
+    		frontRightCollider.motorTorque = 0;
+            rearLeftCollider.motorTorque = 0;
+    		rearRightCollider.motorTorque = 0;
     		}
       }
     }

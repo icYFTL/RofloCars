@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public class CarMovment : MonoBehaviour
 {
@@ -16,6 +11,7 @@ public class CarMovment : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
+    private bool jump;
 
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
@@ -45,6 +41,7 @@ public class CarMovment : MonoBehaviour
         horizontalInput = Input.GetAxis(HORIZONTAL);
         verticalInput = Input.GetAxis(VERTICAL);
         isBreaking = Input.GetKey(KeyCode.Space);
+        jump = Input.GetKey(KeyCode.LeftControl);
     }
 
     private void HandleMotor()
@@ -52,6 +49,7 @@ public class CarMovment : MonoBehaviour
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentbreakForce = isBreaking ? breakForce : 0f;
+
         ApplyBreaking();       
     }
 
